@@ -5,6 +5,7 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +21,8 @@ public class FlowableController {
     private FlowableService flowableService;
 
     @PostMapping(value="/process")
-    public void startProcessInstance() {
-        flowableService.startProcess();
+    public void startProcessInstance(@RequestBody StartProcessRepresentation startProcessRepresentation) {
+        flowableService.startProcess(startProcessRepresentation.getAssignee());
     }
 
     @RequestMapping(value="/tasks", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
@@ -57,5 +58,18 @@ public class FlowableController {
             this.name = name;
         }
 
+    }
+
+    static class StartProcessRepresentation {
+
+        private String assignee;
+
+        public String getAssignee() {
+            return assignee;
+        }
+
+        public void setAssignee(String assignee) {
+            this.assignee = assignee;
+        }
     }
 }

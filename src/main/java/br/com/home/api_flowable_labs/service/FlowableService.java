@@ -1,5 +1,7 @@
 package br.com.home.api_flowable_labs.service;
 
+import br.com.home.api_flowable_labs.model.Person;
+import br.com.home.api_flowable_labs.repository.PersonRepository;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -18,9 +22,16 @@ public class FlowableService {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private PersonRepository personRepository;
+
     @Transactional
-    public void startProcess() {
-        runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    public void startProcess(String assignee) {
+        Person person = personRepository.findByUsername(assignee);
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("person", person);
+
+        runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     }
 
     @Transactional
@@ -28,4 +39,10 @@ public class FlowableService {
         return taskService.createTaskQuery().taskAssignee(assignee).list();
     }
 
+    public void createDemoUsers() {
+        if (personRepository.findAll().size() == 0) {
+            personRepository.save(new Person("jbarrez", "Joram", "Barrez", new Date()));
+            personRepository.save(new Person("trademakers", "Tijs", "Rademakers", new Date()));
+        }
+    }
 }
