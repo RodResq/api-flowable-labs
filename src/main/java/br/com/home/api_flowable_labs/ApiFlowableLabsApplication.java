@@ -3,7 +3,7 @@ package br.com.home.api_flowable_labs;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 public class ApiFlowableLabsApplication {
 
 	public static void main(String[] args) {
