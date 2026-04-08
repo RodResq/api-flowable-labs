@@ -12,9 +12,11 @@ public class TaskInstanceDTO {
     private String dsNome;
     private Boolean isOpen;
     private String nameFluxo;
+    private Long idTaskInstance;
+    private Long idProcessInstance;
 
     public TaskInstanceDTO(Long id, String name, LocalDateTime create, LocalDateTime end,
-                           Long idUsuario, String dsNome, Boolean isOpen, String nameFluxo) {
+                           Long idUsuario, String dsNome, Boolean isOpen, String nameFluxo, Long idTaskInstance, Long idProcessInstance) {
         this.id = id;
         this.name = name;
         this.create = create;
@@ -23,6 +25,8 @@ public class TaskInstanceDTO {
         this.dsNome = dsNome;
         this.isOpen = isOpen;
         this.nameFluxo = nameFluxo;
+        this.idTaskInstance = idTaskInstance;
+        this.idProcessInstance = idProcessInstance;
     }
 
     public Long getId() {
@@ -55,5 +59,21 @@ public class TaskInstanceDTO {
 
     public String getNameFluxo() {
         return nameFluxo;
+    }
+
+    public Long getIdTaskInstance() {
+        return idTaskInstance;
+    }
+
+    public void setIdTaskInstance(Long idTaskInstance) {
+        this.idTaskInstance = idTaskInstance;
+    }
+
+    public Long getIdProcessInstance() {
+        return idProcessInstance;
+    }
+
+    public void setIdProcessInstance(Long idProcessInstance) {
+        this.idProcessInstance = idProcessInstance;
     }
 }

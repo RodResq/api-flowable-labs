@@ -1,16 +1,15 @@
 package br.com.home.api_flowable_labs.controller;
 
 import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
+import br.com.home.api_flowable_labs.model.JbpmVariableInstance;
 import br.com.home.api_flowable_labs.model.Processo;
+import br.com.home.api_flowable_labs.repository.JbpmVariableInstanceRepository;
 import br.com.home.api_flowable_labs.repository.ProcessoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,9 +19,12 @@ import java.util.List;
 public class ProcessoController {
 
     private final ProcessoRepository processoRepository;
+    private final JbpmVariableInstanceRepository jbpmVariableInstanceRepository;
 
-    public ProcessoController(ProcessoRepository processoRepository) {
+    public ProcessoController(ProcessoRepository processoRepository,
+                              JbpmVariableInstanceRepository jbpmVariableInstanceRepository) {
         this.processoRepository = processoRepository;
+        this.jbpmVariableInstanceRepository = jbpmVariableInstanceRepository;
     }
 
     @GetMapping
@@ -42,9 +44,20 @@ public class ProcessoController {
                         row[4] != null ? ((Number) row[4]).longValue() : null,
                         (String) row[5],
                         (Boolean) row[6],
-                        (String) row[7]
+                        (String) row[7],
+                        (Long) row[8],
+                        (Long) row[9]
                 ))
                 .toList();
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{idProcessoInstance}/tarefas/{idTaskInstance}/variaveis")
+    public ResponseEntity<List<JbpmVariableInstance>> listarVariaveis(
+            @PathVariable Long idProcessoInstance,
+            @PathVariable Long idTaskInstance) {
+        return ResponseEntity.ok(
+                jbpmVariableInstanceRepository.findByProcessoInstanceAndTaskInstance(idProcessoInstance, idTaskInstance)
+        );
     }
 }
