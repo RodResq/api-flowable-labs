@@ -1,11 +1,13 @@
 package br.com.home.api_flowable_labs.model;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "jbpm_variableinstance", schema = "public")
-public class JbpmVariableInstance {
+public class JbpmVariableInstance implements Serializable {
 
     @Id
     @Column(name = "id_")
@@ -44,8 +46,9 @@ public class JbpmVariableInstance {
     @Column(name = "processinstance_")
     private Long processInstance;
 
-    @Column(name = "taskinstance_")
-    private Long taskInstance;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "taskinstance_", referencedColumnName = "id_")
+    private JbpmTaskInstance taskInstance;
 
     public JbpmVariableInstance() {
     }
@@ -146,11 +149,11 @@ public class JbpmVariableInstance {
         this.processInstance = processInstance;
     }
 
-    public Long getTaskInstance() {
+    public JbpmTaskInstance getTaskInstance() {
         return taskInstance;
     }
 
-    public void setTaskInstance(Long taskInstance) {
+    public void setTaskInstance(JbpmTaskInstance taskInstance) {
         this.taskInstance = taskInstance;
     }
 }

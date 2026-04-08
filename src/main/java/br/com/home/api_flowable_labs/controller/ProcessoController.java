@@ -46,7 +46,8 @@ public class ProcessoController {
                         (Boolean) row[6],
                         (String) row[7],
                         (Long) row[8],
-                        (Long) row[9]
+                        (Long) row[9],
+                        (String) row[10]
                 ))
                 .toList();
         return ResponseEntity.ok(result);
@@ -57,7 +58,7 @@ public class ProcessoController {
             @PathVariable Long idProcessoInstance,
             @PathVariable Long idTaskInstance) {
         return ResponseEntity.ok(
-                jbpmVariableInstanceRepository.findByProcessoInstanceAndTaskInstance(idProcessoInstance, idTaskInstance)
+                jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstanceId(idProcessoInstance, idTaskInstance)
         );
     }
 }
