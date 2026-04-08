@@ -28,12 +28,17 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 ti.isopen_,
                 pd.name_ AS name_flx_,
                 ti.id_ AS id_taskinstance,
-                tpi.id_proc_inst AS id_process_instance
+                tpi.id_proc_inst AS id_process_instance,
+                jt.id_ id_jbpm_token,
+                jt.node_ id_jbpm_node,
+                nd.name_ AS node_in_graph
             FROM
                 jbpm_taskinstance ti
                 INNER JOIN core.tb_processo_instance tpi ON tpi.id_proc_inst = ti.procinst_
                 INNER JOIN jbpm_processinstance pi ON ti.procinst_ = pi.id_
                 INNER JOIN jbpm_processdefinition pd ON pi.processdefinition_ = pd.id_
+                INNER JOIN jbpm_token jt ON jt.id_ = pi.roottoken_
+                INNER JOIN jbpm_node nd ON nd.id_ = jt.node_
                 LEFT JOIN acl.tb_usuario_login usu ON usu.ds_login = ti.actorid_
                 INNER JOIN core.tb_processo tp ON tp.id_processo = tpi.id_processo
             WHERE

@@ -14,11 +14,13 @@ public class TaskInstanceDTO {
     private String nameFluxo;
     private Long idTaskInstance;
     private Long idProcessInstance;
-    private String taskName;
+    private Long idJbpmToken;
+    private Long idJbpmNode;
+    private String nodeInGraph;
 
     public TaskInstanceDTO(Long id, String name, LocalDateTime create, LocalDateTime end,
                            Long idUsuario, String dsNome, Boolean isOpen, String nameFluxo, Long idTaskInstance,
-                           Long idProcessInstance, String taskName) {
+                           Long idProcessInstance, Long idJbpmToken, Long idJbpmNode, String nodeInGraph) {
         this.id = id;
         this.name = name;
         this.create = create;
@@ -29,7 +31,9 @@ public class TaskInstanceDTO {
         this.nameFluxo = nameFluxo;
         this.idTaskInstance = idTaskInstance;
         this.idProcessInstance = idProcessInstance;
-        this.taskName = taskName;
+        this.idJbpmToken = idJbpmToken;
+        this.idJbpmNode = idJbpmNode;
+        this.nodeInGraph = nodeInGraph;
     }
 
     public Long getId() {
@@ -72,7 +76,15 @@ public class TaskInstanceDTO {
         return idProcessInstance;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public Long getIdJbpmToken() {
+        return idJbpmToken;
+    }
+
+    public Long getIdJbpmNode() {
+        return idJbpmNode;
+    }
+
+    public String getNodeInGraph() {
+        return nodeInGraph;
     }
 }

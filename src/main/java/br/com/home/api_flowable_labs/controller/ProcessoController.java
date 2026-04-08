@@ -47,7 +47,9 @@ public class ProcessoController {
                         (String) row[7],
                         (Long) row[8],
                         (Long) row[9],
-                        (String) row[10]
+                        (Long) row[10],
+                        (Long) row[11],
+                        (String) row[12]
                 ))
                 .toList();
         return ResponseEntity.ok(result);
