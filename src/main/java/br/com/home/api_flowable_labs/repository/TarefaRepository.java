@@ -32,7 +32,7 @@ public interface TarefaRepository extends JpaRepository<ProcessoTarefa, Long> {
                 INNER JOIN core.tb_localizacao lmod ON lmod.id_localizacao = tli.id_localizacao
                 LEFT OUTER JOIN client.tb_orgao_julgador_colgiado ojc ON ojc.id_orgao_julgador_colegiado = ptar.id_orgao_julgador_colegiado
             WHERE
-                p.nr_processo = :nrProcesso
+                ptar.id_processo_tarefa = :idTarefa
             """, nativeQuery = true)
-    List<PerfilVisualizarTarefaProjection> findPerfilVisualizarTarefa(@Param("nrProcesso") String nrProcesso);
+    List<PerfilVisualizarTarefaProjection> findPerfilVisualizarTarefa(@Param("idTarefa") Long idTarefa);
 }

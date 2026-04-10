@@ -4,6 +4,7 @@ import br.com.home.api_flowable_labs.dto.PerfilVisualizarTarefaProjection;
 import br.com.home.api_flowable_labs.repository.TarefaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +21,9 @@ public class TarefaController {
         this.tarefaRepository = tarefaRepository;
     }
 
-    @GetMapping("/perfil-visualizar")
+    @GetMapping("/{idTarefa}/perfil-visualizar")
     public ResponseEntity<List<PerfilVisualizarTarefaProjection>> listarPerfilVisualizar(
-            @RequestParam String nrProcesso) {
-        return ResponseEntity.ok(tarefaRepository.findPerfilVisualizarTarefa(nrProcesso));
+            @PathVariable Long idTarefa) {
+        return ResponseEntity.ok(tarefaRepository.findPerfilVisualizarTarefa(idTarefa));
     }
 }
