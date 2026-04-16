@@ -1,7 +1,7 @@
 package br.com.home.api_flowable_labs.controller;
 
 import br.com.home.api_flowable_labs.model.Fluxo;
-import br.com.home.api_flowable_labs.repository.FluxoRepository;
+import br.com.home.api_flowable_labs.service.FluxoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,20 +14,20 @@ import java.util.List;
 @RequestMapping("/fluxos")
 public class PjeFluxoController {
 
-    private final FluxoRepository fluxoRepository;
+    private final FluxoService fluxoService;
 
-    public PjeFluxoController(FluxoRepository fluxoRepository) {
-        this.fluxoRepository = fluxoRepository;
+    public PjeFluxoController(FluxoService fluxoService) {
+        this.fluxoService = fluxoService;
     }
 
     @GetMapping
     public ResponseEntity<List<Fluxo>> listar() {
-        return ResponseEntity.ok(fluxoRepository.findAll());
+        return ResponseEntity.ok(fluxoService.listar());
     }
 
     @GetMapping("/pesquisar")
     public ResponseEntity<Fluxo> pesquisar(@RequestParam String dsFluxo) {
-        return fluxoRepository.findByDsFluxo(dsFluxo)
+        return fluxoService.pesquisar(dsFluxo)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

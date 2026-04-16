@@ -5,6 +5,7 @@ import br.com.home.api_flowable_labs.model.JbpmVariableInstance;
 import br.com.home.api_flowable_labs.model.Processo;
 import br.com.home.api_flowable_labs.repository.JbpmVariableInstanceRepository;
 import br.com.home.api_flowable_labs.repository.ProcessoRepository;
+import br.com.home.api_flowable_labs.service.ProcessoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,18 +19,21 @@ import java.util.List;
 @RequestMapping("/processos")
 public class ProcessoController {
 
+    private final ProcessoService processoService;
     private final ProcessoRepository processoRepository;
     private final JbpmVariableInstanceRepository jbpmVariableInstanceRepository;
 
-    public ProcessoController(ProcessoRepository processoRepository,
+    public ProcessoController(ProcessoService processoService,
+                              ProcessoRepository processoRepository,
                               JbpmVariableInstanceRepository jbpmVariableInstanceRepository) {
+        this.processoService = processoService;
         this.processoRepository = processoRepository;
         this.jbpmVariableInstanceRepository = jbpmVariableInstanceRepository;
     }
 
     @GetMapping
     public ResponseEntity<Page<Processo>> listar(@PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(processoRepository.findAllDistinct(pageable));
+        return ResponseEntity.ok(processoService.listar(pageable));
     }
 
     @GetMapping("/tarefas")

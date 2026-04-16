@@ -1,6 +1,9 @@
 package br.com.home.api_flowable_labs.model;
 
 import jakarta.persistence.*;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,7 +12,10 @@ import java.time.LocalDateTime;
     schema = "core",
     uniqueConstraints = @UniqueConstraint(name = "unq_tb_processo_proc_pg", columnNames = {"id_sessao_pg", "id_pk_tb_processo_pg"})
 )
-public class Processo {
+public class Processo implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_tb_processo")
