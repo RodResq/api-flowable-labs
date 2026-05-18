@@ -1,6 +1,7 @@
 services:
   api:
     build: .
+    hostname: flowable-api
     ports:
       - "8080:8080"
     env_file:
