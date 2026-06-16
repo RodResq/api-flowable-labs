@@ -1,10 +1,15 @@
 package br.com.home.api_flowable_labs.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_fluxo", schema = "core")
+@Getter
+@NoArgsConstructor
 public class Fluxo {
 
     @Id
@@ -43,94 +48,4 @@ public class Fluxo {
     @Column(name = "dt_ultima_publicacao")
     private LocalDateTime dtUltimaPublicacao;
 
-    public Fluxo() {
-    }
-
-    public Long getIdFluxo() {
-        return idFluxo;
-    }
-
-    public void setIdFluxo(Long idFluxo) {
-        this.idFluxo = idFluxo;
-    }
-
-    public String getCdFluxo() {
-        return cdFluxo;
-    }
-
-    public void setCdFluxo(String cdFluxo) {
-        this.cdFluxo = cdFluxo;
-    }
-
-    public String getDsFluxo() {
-        return dsFluxo;
-    }
-
-    public void setDsFluxo(String dsFluxo) {
-        this.dsFluxo = dsFluxo;
-    }
-
-    public Boolean getInAtivo() {
-        return inAtivo;
-    }
-
-    public void setInAtivo(Boolean inAtivo) {
-        this.inAtivo = inAtivo;
-    }
-
-    public Integer getQtPrazo() {
-        return qtPrazo;
-    }
-
-    public void setQtPrazo(Integer qtPrazo) {
-        this.qtPrazo = qtPrazo;
-    }
-
-    public Boolean getInPublicado() {
-        return inPublicado;
-    }
-
-    public void setInPublicado(Boolean inPublicado) {
-        this.inPublicado = inPublicado;
-    }
-
-    public LocalDateTime getDtInicioPublicacao() {
-        return dtInicioPublicacao;
-    }
-
-    public void setDtInicioPublicacao(LocalDateTime dtInicioPublicacao) {
-        this.dtInicioPublicacao = dtInicioPublicacao;
-    }
-
-    public LocalDateTime getDtFimPublicacao() {
-        return dtFimPublicacao;
-    }
-
-    public void setDtFimPublicacao(LocalDateTime dtFimPublicacao) {
-        this.dtFimPublicacao = dtFimPublicacao;
-    }
-
-    public Long getIdUsuarioPublicacao() {
-        return idUsuarioPublicacao;
-    }
-
-    public void setIdUsuarioPublicacao(Long idUsuarioPublicacao) {
-        this.idUsuarioPublicacao = idUsuarioPublicacao;
-    }
-
-    public String getDsXml() {
-        return dsXml;
-    }
-
-    public void setDsXml(String dsXml) {
-        this.dsXml = dsXml;
-    }
-
-    public LocalDateTime getDtUltimaPublicacao() {
-        return dtUltimaPublicacao;
-    }
-
-    public void setDtUltimaPublicacao(LocalDateTime dtUltimaPublicacao) {
-        this.dtUltimaPublicacao = dtUltimaPublicacao;
-    }
 }

@@ -1,12 +1,16 @@
 package br.com.home.api_flowable_labs.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "tb_localizacao", schema = "core")
+@Getter
+@NoArgsConstructor
 public class Localizacao implements Serializable {
 
     @Serial
@@ -42,78 +46,4 @@ public class Localizacao implements Serializable {
     @Column(name = "nr_faixa_superior")
     private Integer nrFaixaSuperior;
 
-    public Localizacao() {
-    }
-
-    public Long getIdLocalizacao() {
-        return idLocalizacao;
-    }
-
-    public void setIdLocalizacao(Long idLocalizacao) {
-        this.idLocalizacao = idLocalizacao;
-    }
-
-    public String getDsLocalizacao() {
-        return dsLocalizacao;
-    }
-
-    public void setDsLocalizacao(String dsLocalizacao) {
-        this.dsLocalizacao = dsLocalizacao;
-    }
-
-    public Boolean getInAtivo() {
-        return inAtivo;
-    }
-
-    public void setInAtivo(Boolean inAtivo) {
-        this.inAtivo = inAtivo;
-    }
-
-    public Long getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(Long idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
-    public Long getIdLocalizacaoPai() {
-        return idLocalizacaoPai;
-    }
-
-    public void setIdLocalizacaoPai(Long idLocalizacaoPai) {
-        this.idLocalizacaoPai = idLocalizacaoPai;
-    }
-
-    public Long getIdEstrutura() {
-        return idEstrutura;
-    }
-
-    public void setIdEstrutura(Long idEstrutura) {
-        this.idEstrutura = idEstrutura;
-    }
-
-    public Boolean getInEstrutura() {
-        return inEstrutura;
-    }
-
-    public void setInEstrutura(Boolean inEstrutura) {
-        this.inEstrutura = inEstrutura;
-    }
-
-    public Integer getNrFaixaInferior() {
-        return nrFaixaInferior;
-    }
-
-    public void setNrFaixaInferior(Integer nrFaixaInferior) {
-        this.nrFaixaInferior = nrFaixaInferior;
-    }
-
-    public Integer getNrFaixaSuperior() {
-        return nrFaixaSuperior;
-    }
-
-    public void setNrFaixaSuperior(Integer nrFaixaSuperior) {
-        this.nrFaixaSuperior = nrFaixaSuperior;
-    }
 }

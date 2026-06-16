@@ -1,9 +1,13 @@
 package br.com.home.api_flowable_labs.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_processo_tarefa", schema = "client")
+@Getter
+@NoArgsConstructor
 public class ProcessoTarefa {
 
     @Id
@@ -27,54 +31,4 @@ public class ProcessoTarefa {
     @Column(name = "id_orgao_julgador_colegiado")
     private Long idOrgaoJulgadorColegiado;
 
-    public ProcessoTarefa() {
-    }
-
-    public Long getIdProcessoTarefa() {
-        return idProcessoTarefa;
-    }
-
-    public void setIdProcessoTarefa(Long idProcessoTarefa) {
-        this.idProcessoTarefa = idProcessoTarefa;
-    }
-
-    public String getNmTarefa() {
-        return nmTarefa;
-    }
-
-    public void setNmTarefa(String nmTarefa) {
-        this.nmTarefa = nmTarefa;
-    }
-
-    public Long getIdProcessoTrf() {
-        return idProcessoTrf;
-    }
-
-    public void setIdProcessoTrf(Long idProcessoTrf) {
-        this.idProcessoTrf = idProcessoTrf;
-    }
-
-    public Long getIdTask() {
-        return idTask;
-    }
-
-    public void setIdTask(Long idTask) {
-        this.idTask = idTask;
-    }
-
-    public Long getIdLocalizacao() {
-        return idLocalizacao;
-    }
-
-    public void setIdLocalizacao(Long idLocalizacao) {
-        this.idLocalizacao = idLocalizacao;
-    }
-
-    public Long getIdOrgaoJulgadorColegiado() {
-        return idOrgaoJulgadorColegiado;
-    }
-
-    public void setIdOrgaoJulgadorColegiado(Long idOrgaoJulgadorColegiado) {
-        this.idOrgaoJulgadorColegiado = idOrgaoJulgadorColegiado;
-    }
 }

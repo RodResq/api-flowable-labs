@@ -1,9 +1,13 @@
 package br.com.home.api_flowable_labs.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_proc_localizacao_ibpm", schema = "core")
+@Getter
+@NoArgsConstructor
 public class ProcLocalizacaoIbpm {
 
     @Id
@@ -27,54 +31,4 @@ public class ProcLocalizacaoIbpm {
     @Column(name = "id_papel")
     private Long idPapel;
 
-    public ProcLocalizacaoIbpm() {
-    }
-
-    public Long getIdProcessoLocalizacao() {
-        return idProcessoLocalizacao;
-    }
-
-    public void setIdProcessoLocalizacao(Long idProcessoLocalizacao) {
-        this.idProcessoLocalizacao = idProcessoLocalizacao;
-    }
-
-    public Long getIdTaskJbpm() {
-        return idTaskJbpm;
-    }
-
-    public void setIdTaskJbpm(Long idTaskJbpm) {
-        this.idTaskJbpm = idTaskJbpm;
-    }
-
-    public Long getIdProcessinstanceJbpm() {
-        return idProcessinstanceJbpm;
-    }
-
-    public void setIdProcessinstanceJbpm(Long idProcessinstanceJbpm) {
-        this.idProcessinstanceJbpm = idProcessinstanceJbpm;
-    }
-
-    public Long getIdProcesso() {
-        return idProcesso;
-    }
-
-    public void setIdProcesso(Long idProcesso) {
-        this.idProcesso = idProcesso;
-    }
-
-    public Long getIdLocalizacao() {
-        return idLocalizacao;
-    }
-
-    public void setIdLocalizacao(Long idLocalizacao) {
-        this.idLocalizacao = idLocalizacao;
-    }
-
-    public Long getIdPapel() {
-        return idPapel;
-    }
-
-    public void setIdPapel(Long idPapel) {
-        this.idPapel = idPapel;
-    }
 }

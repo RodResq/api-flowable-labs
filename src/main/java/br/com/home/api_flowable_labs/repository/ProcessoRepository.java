@@ -1,7 +1,6 @@
 package br.com.home.api_flowable_labs.repository;
 
 import br.com.home.api_flowable_labs.model.Processo;
-import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProcessoRepository extends JpaRepository<Processo, Long> {
@@ -47,4 +47,6 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 ti.create_
             """, nativeQuery = true)
     List<Object[]> findTaskInstancesByNrProcesso(@Param("nrProcesso") String nrProcesso);
+
+    Optional<Processo> findByNrProcesso(String nrProcesso);
 }

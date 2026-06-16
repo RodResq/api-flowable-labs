@@ -12,7 +12,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -67,4 +66,12 @@ public class ProcessoController {
                 jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstanceId(idProcessoInstance, idTaskInstance)
         );
     }
+
+    @GetMapping("/buscar/{nrProcesso}")
+    public ResponseEntity<Processo> buscarProcesso(@PathVariable String nrProcesso) {
+        return processoRepository.findByNrProcesso(nrProcesso)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
+

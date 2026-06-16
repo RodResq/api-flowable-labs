@@ -6,12 +6,19 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(
     name = "tb_processo",
     schema = "core",
     uniqueConstraints = @UniqueConstraint(name = "unq_tb_processo_proc_pg", columnNames = {"id_sessao_pg", "id_pk_tb_processo_pg"})
 )
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Processo implements Serializable {
 
     @Serial
@@ -74,150 +81,4 @@ public class Processo implements Serializable {
     @Column(name = "nr_processo_temp", length = 30)
     private String nrProcessoTemp;
 
-    public Processo() {
-    }
-
-    public Long getIdProcesso() {
-        return idProcesso;
-    }
-
-    public void setIdProcesso(Long idProcesso) {
-        this.idProcesso = idProcesso;
-    }
-
-    public String getNrProcesso() {
-        return nrProcesso;
-    }
-
-    public void setNrProcesso(String nrProcesso) {
-        this.nrProcesso = nrProcesso;
-    }
-
-    public String getNrProcessoOrigem() {
-        return nrProcessoOrigem;
-    }
-
-    public void setNrProcessoOrigem(String nrProcessoOrigem) {
-        this.nrProcessoOrigem = nrProcessoOrigem;
-    }
-
-    public String getDsComplemento() {
-        return dsComplemento;
-    }
-
-    public void setDsComplemento(String dsComplemento) {
-        this.dsComplemento = dsComplemento;
-    }
-
-    public LocalDateTime getDtInicio() {
-        return dtInicio;
-    }
-
-    public void setDtInicio(LocalDateTime dtInicio) {
-        this.dtInicio = dtInicio;
-    }
-
-    public Long getIdFluxo() {
-        return idFluxo;
-    }
-
-    public void setIdFluxo(Long idFluxo) {
-        this.idFluxo = idFluxo;
-    }
-
-    public Long getIdUsuarioBloqueio() {
-        return idUsuarioBloqueio;
-    }
-
-    public void setIdUsuarioBloqueio(Long idUsuarioBloqueio) {
-        this.idUsuarioBloqueio = idUsuarioBloqueio;
-    }
-
-    public Long getIdUsuarioCadastroProcesso() {
-        return idUsuarioCadastroProcesso;
-    }
-
-    public void setIdUsuarioCadastroProcesso(Long idUsuarioCadastroProcesso) {
-        this.idUsuarioCadastroProcesso = idUsuarioCadastroProcesso;
-    }
-
-    public Long getIdJbpm() {
-        return idJbpm;
-    }
-
-    public void setIdJbpm(Long idJbpm) {
-        this.idJbpm = idJbpm;
-    }
-
-    public LocalDateTime getDtFim() {
-        return dtFim;
-    }
-
-    public void setDtFim(LocalDateTime dtFim) {
-        this.dtFim = dtFim;
-    }
-
-    public Long getNrDuracao() {
-        return nrDuracao;
-    }
-
-    public void setNrDuracao(Long nrDuracao) {
-        this.nrDuracao = nrDuracao;
-    }
-
-    public String getNmActorId() {
-        return nmActorId;
-    }
-
-    public void setNmActorId(String nmActorId) {
-        this.nmActorId = nmActorId;
-    }
-
-    public Long getIdCaixa() {
-        return idCaixa;
-    }
-
-    public void setIdCaixa(Long idCaixa) {
-        this.idCaixa = idCaixa;
-    }
-
-    public Long getIdStatus() {
-        return idStatus;
-    }
-
-    public void setIdStatus(Long idStatus) {
-        this.idStatus = idStatus;
-    }
-
-    public String getDsNmUsuCadastroProcesso() {
-        return dsNmUsuCadastroProcesso;
-    }
-
-    public void setDsNmUsuCadastroProcesso(String dsNmUsuCadastroProcesso) {
-        this.dsNmUsuCadastroProcesso = dsNmUsuCadastroProcesso;
-    }
-
-    public Long getIdPkTbProcessoPg() {
-        return idPkTbProcessoPg;
-    }
-
-    public void setIdPkTbProcessoPg(Long idPkTbProcessoPg) {
-        this.idPkTbProcessoPg = idPkTbProcessoPg;
-    }
-
-    public Long getIdSessaoPg() {
-        return idSessaoPg;
-    }
-
-    public void setIdSessaoPg(Long idSessaoPg) {
-        this.idSessaoPg = idSessaoPg;
-    }
-
-    public String getNrProcessoTemp() {
-        return nrProcessoTemp;
-    }
-
-    public void setNrProcessoTemp(String nrProcessoTemp) {
-        this.nrProcessoTemp = nrProcessoTemp;
-    }
 }

@@ -2,7 +2,11 @@ services:
   api:
     build: .
     hostname: flowable-api
+    image: service-api-flowable
     ports:
       - "8080:8080"
+      - "8787:8787"
     env_file:
       - .env
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8787"
