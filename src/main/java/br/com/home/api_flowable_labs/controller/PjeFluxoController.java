@@ -47,7 +47,9 @@ public class PjeFluxoController {
                         (String) row[2],
                         (Long) row[3],
                         (String) row[4],
-                        (Boolean) row[5]
+                        (Long) row[5],
+                        (Long) row[6],
+                        (Boolean) row[7]
                 ))
                 .toList();
         return ResponseEntity.ok(result);

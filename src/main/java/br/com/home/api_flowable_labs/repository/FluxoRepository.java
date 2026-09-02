@@ -22,6 +22,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                 movimentacao.id_processinstance,
                 movimentacao.nm_tarefa,
                 movimentacao.id_node,
+                movimentacao.id_token,
                 movimentacao.isopen_
             FROM (
                 SELECT
@@ -31,6 +32,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     pi.id_  as id_processinstance,
                     ti.name_ AS nm_tarefa,
                     nd.id_ as id_node,
+                    jt.id_ as id_token,
                     ti.isopen_,
                     BOOL_OR(ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_aberta,
                     BOOL_OR(NOT ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_fechada

@@ -9,15 +9,19 @@ public class ProcessoMovimentacaoDTO {
     private String nmFluxo;
     private Long idProcessInstance;
     private String nmTarefa;
+    private Long idNode;
+    private Long idToken;
     private Boolean isOpen;
 
     public ProcessoMovimentacaoDTO(String nrProcesso, Long idProcessDefinition, String nmFluxo, Long idProcessInstance,
-                                   String nmTarefa, Boolean isOpen) {
+                                   String nmTarefa, Long idNode, Long idToken, Boolean isOpen) {
         this.nrProcesso = nrProcesso;
         this.idProcessDefinition = idProcessDefinition;
         this.nmFluxo = nmFluxo;
         this.idProcessInstance = idProcessInstance;
         this.nmTarefa = nmTarefa;
+        this.idNode = idNode;
+        this.idToken = idToken;
         this.isOpen = isOpen;
     }
 
@@ -39,6 +43,14 @@ public class ProcessoMovimentacaoDTO {
 
     public String getNmTarefa() {
         return nmTarefa;
+    }
+
+    public Long getIdNode() {
+        return idNode;
+    }
+
+    public Long getIdToken() {
+        return idToken;
     }
 
     public Boolean getIsOpen() {
