@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -42,9 +43,11 @@ public class PjeFluxoController {
                 .stream()
                 .map(row -> new ProcessoMovimentacaoDTO(
                         (String) row[0],
-                        (String) row[1],
+                        (Long) row[1],
                         (String) row[2],
-                        (Boolean) row[3]
+                        (Long) row[3],
+                        (String) row[4],
+                        (Boolean) row[5]
                 ))
                 .toList();
         return ResponseEntity.ok(result);

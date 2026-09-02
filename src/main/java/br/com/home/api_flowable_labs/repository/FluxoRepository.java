@@ -17,14 +17,20 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
     @Query(value = """
             SELECT
                 movimentacao.nr_processo,
+                movimentacao.id_processdefinition,
                 movimentacao.nm_fluxo,
+                movimentacao.id_processinstance,
                 movimentacao.nm_tarefa,
+                movimentacao.id_node,
                 movimentacao.isopen_
             FROM (
                 SELECT
                     tp.nr_processo,
+                    pd.id_ AS id_processdefinition,
                     pd.name_ AS nm_fluxo,
+                    pi.id_  as id_processinstance,
                     ti.name_ AS nm_tarefa,
+                    nd.id_ as id_node,
                     ti.isopen_,
                     BOOL_OR(ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_aberta,
                     BOOL_OR(NOT ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_fechada
@@ -38,7 +44,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     INNER JOIN core.tb_processo tp ON tp.id_processo = tpi.id_processo
                     INNER JOIN client.tb_processo_tarefa tpt ON tpt.id_process_instance = tpi.id_proc_inst
                 WHERE
-                    ti.create_ >= CURRENT_DATE - INTERVAL '2 year'
+                    ti.create_ >= CURRENT_DATE - INTERVAL '1 day'
                     AND tpt.nm_fluxo = :fluxo
             ) movimentacao
             WHERE movimentacao.tem_aberta AND movimentacao.tem_fechada
