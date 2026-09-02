@@ -1,5 +1,6 @@
 package br.com.home.api_flowable_labs.repository;
 
+import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,4 +50,27 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     List<Object[]> findTaskInstancesByNrProcesso(@Param("nrProcesso") String nrProcesso);
 
     Optional<Processo> findByNrProcesso(String nrProcesso);
+
+
+    @Query(value = """
+            select
+            	ja.id_ as idAction,
+                ja.name_ as nameAction,
+                ja.actionexpression_ as expressionAction,
+                je.id_ as idEvent,
+                je.eventtype_ as eventType,
+                je.task_ as idTask,
+                jn.id_ as idNode,
+                jn.name_ as nameNode,
+                jn.description_ as descriptionNode,
+                jn.decisionexpression_ as decisionexpressionNode,
+                jn.endtasks_ as endtasksNode
+            from jbpm_action ja
+            inner join jbpm_event je on je.id_ = ja.event_
+            inner join jbpm_node jn on jn.id_ = je.node_
+            where ja.processdefinition_ = :idProcessDefinition
+            	and jn.id_ = :idNode;
+            """, nativeQuery = true)
+    List<AcaoDoNodeProjection> findAcoesDoNodoNoFluxo(@Param("idProcessDefinition") Long idProcessDefinition,
+                                                      @Param("idNode") Long idNode);
 }

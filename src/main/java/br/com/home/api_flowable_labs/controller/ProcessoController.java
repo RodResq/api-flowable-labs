@@ -1,11 +1,13 @@
 package br.com.home.api_flowable_labs.controller;
 
+import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
 import br.com.home.api_flowable_labs.model.JbpmVariableInstance;
 import br.com.home.api_flowable_labs.model.Processo;
 import br.com.home.api_flowable_labs.repository.JbpmVariableInstanceRepository;
 import br.com.home.api_flowable_labs.repository.ProcessoRepository;
 import br.com.home.api_flowable_labs.service.ProcessoService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -72,6 +74,12 @@ public class ProcessoController {
         return processoRepository.findByNrProcesso(nrProcesso)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/acoes")
+    public ResponseEntity<List<AcaoDoNodeProjection>> listaAcoesDoNode(@PathParam("idProcessDefinition") Long idProcessDefinition,
+                                                                       @PathParam("idNode") Long idNode) {
+        return ResponseEntity.ok(processoRepository.findAcoesDoNodoNoFluxo(idProcessDefinition, idNode));
     }
 }
 
