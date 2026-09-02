@@ -1,6 +1,8 @@
 package br.com.home.api_flowable_labs.controller;
 
+import br.com.home.api_flowable_labs.dto.ProcessoMovimentacaoDTO;
 import br.com.home.api_flowable_labs.model.Fluxo;
+import br.com.home.api_flowable_labs.repository.FluxoRepository;
 import br.com.home.api_flowable_labs.service.FluxoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +17,11 @@ import java.util.List;
 public class PjeFluxoController {
 
     private final FluxoService fluxoService;
+    private final FluxoRepository fluxoRepository;
 
-    public PjeFluxoController(FluxoService fluxoService) {
+    public PjeFluxoController(FluxoService fluxoService, FluxoRepository fluxoRepository) {
         this.fluxoService = fluxoService;
+        this.fluxoRepository = fluxoRepository;
     }
 
     @GetMapping
@@ -30,5 +34,19 @@ public class PjeFluxoController {
         return fluxoService.pesquisar(dsFluxo)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/processos")
+    public ResponseEntity<List<ProcessoMovimentacaoDTO>> listarProcessosEmAndamento(@RequestParam String nmFluxo) {
+        List<ProcessoMovimentacaoDTO> result = fluxoRepository.findMovimentacoesProcessosPorFluxo(nmFluxo)
+                .stream()
+                .map(row -> new ProcessoMovimentacaoDTO(
+                        (String) row[0],
+                        (String) row[1],
+                        (String) row[2],
+                        (Boolean) row[3]
+                ))
+                .toList();
+        return ResponseEntity.ok(result);
     }
 }
