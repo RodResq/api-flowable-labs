@@ -1,6 +1,7 @@
 package br.com.home.api_flowable_labs.repository;
 
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
+import br.com.home.api_flowable_labs.dto.VariavelDaIntanciaProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,4 +74,31 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
             """, nativeQuery = true)
     List<AcaoDoNodeProjection> findAcoesDoNodoNoFluxo(@Param("idProcessDefinition") Long idProcessDefinition,
                                                       @Param("idNode") Long idNode);
+
+
+    @Query(value = """
+            select
+                jv.id_ as idVariableIntance,
+                jv.class_ as classJbpmVariableInstance,
+                jv.name_  as name,
+                jv.token_  as idToken,
+                jv.tokenvariablemap_ as idTokenVariableMap,
+                jv.processinstance_ as idProcessInstance,
+                jv.bytearrayvalue_ as idByteArrayValue,
+                jv.datevalue_ as dateValue,
+                jv.doublevalue_ as doubleValue,
+                jv.longidclass_ as longIdClass,
+                jv.longvalue_ as longValue,
+                jv.taskinstance_ as idTaskInstance,
+                jt.id_  as idJbpmToken,
+                jt.start_  as startJbpmToken,
+                jt.end_ as endJbpmToken,
+                jt.nodeenter_ as dateNodeEnter,
+                jt.node_ as idNode
+             from jbpm_variableinstance jv
+             inner join jbpm_token jt on jt.id_ = jv.token_
+             where jv.processinstance_ = :idProcessInstance and jv.token_ = :idToken
+            """, nativeQuery = true)
+    List<VariavelDaIntanciaProjection> findVariavelsDaIntsancia(@Param("idProcessInstance") Long idProcessInstance,
+                                                                @Param("idToken") Long idToken);
 }
