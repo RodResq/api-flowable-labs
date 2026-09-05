@@ -10,5 +10,6 @@ public interface ProcessoMovimentoProjection {
     Long getIdNode();
     Long getIdToken();
     Long getIdTaskInstance();
+    Long getIdTaskControll();
     Boolean getIsOpen();
 }
