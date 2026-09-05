@@ -25,6 +25,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                 movimentacao.id_node as idNode,
                 movimentacao.id_token as idToken,
                 movimentacao.id_task_instance as idTaskInstance,
+                movimentacao.id_taskcontrol as idTaskControll,
                 movimentacao.isopen_ as isOpen
             FROM (
                 SELECT
@@ -36,6 +37,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     nd.id_ as id_node,
                     jt.id_ as id_token,
                     tpt.id_task_instance,
+                    jt3.id_ as id_taskcontrol,
                     ti.isopen_,
                     BOOL_OR(ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_aberta,
                     BOOL_OR(NOT ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_fechada
@@ -48,6 +50,8 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     INNER JOIN jbpm_node nd ON nd.id_ = jt.node_
                     INNER JOIN core.tb_processo tp ON tp.id_processo = tpi.id_processo
                     INNER JOIN client.tb_processo_tarefa tpt ON tpt.id_process_instance = tpi.id_proc_inst
+                    INNER JOIN jbpm_task jt2  on jt2.tasknode_ = nd.id_
+                    INNER JOIN jbpm_taskcontroller jt3 on jt3.id_ = jt2.taskcontroller_
                 WHERE
                     ti.create_ >= CURRENT_DATE - INTERVAL '1 day'
                     AND tpt.nm_fluxo = :fluxo
