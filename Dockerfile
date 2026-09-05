@@ -5,7 +5,7 @@ WORKDIR /app
 COPY mvnw pom.xml ./
 COPY .mvn .mvn
 
-RUN ./mvnw dependency:go-offline -q
+RUN ./mvnw dependency:resolve dependency:resolve-plugins -q
 
 COPY src src
 
