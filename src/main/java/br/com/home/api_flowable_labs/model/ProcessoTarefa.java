@@ -3,9 +3,11 @@ package br.com.home.api_flowable_labs.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
 @Entity
 @Table(name = "tb_processo_tarefa", schema = "client")
+@Immutable
 @Getter
 @NoArgsConstructor
 public class ProcessoTarefa {

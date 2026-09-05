@@ -1,5 +1,6 @@
 package br.com.home.api_flowable_labs.repository;
 
+import br.com.home.api_flowable_labs.dto.ProcessoMovimentoProjection;
 import br.com.home.api_flowable_labs.model.Fluxo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,14 +17,15 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
 
     @Query(value = """
             SELECT
-                movimentacao.nr_processo,
-                movimentacao.id_processdefinition,
-                movimentacao.nm_fluxo,
-                movimentacao.id_processinstance,
-                movimentacao.nm_tarefa,
-                movimentacao.id_node,
-                movimentacao.id_token,
-                movimentacao.isopen_
+                movimentacao.nr_processo as nrProcesso,
+                movimentacao.id_processdefinition as idProcessDefinition,
+                movimentacao.nm_fluxo as nmFluxo,
+                movimentacao.id_processinstance as idProcessInstance,
+                movimentacao.nm_tarefa as nmTarefa,
+                movimentacao.id_node as idNode,
+                movimentacao.id_token as idToken,
+                movimentacao.id_task_instance as idTaskInstance,
+                movimentacao.isopen_ as isOpen
             FROM (
                 SELECT
                     tp.nr_processo,
@@ -33,6 +35,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     ti.name_ AS nm_tarefa,
                     nd.id_ as id_node,
                     jt.id_ as id_token,
+                    tpt.id_task_instance,
                     ti.isopen_,
                     BOOL_OR(ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_aberta,
                     BOOL_OR(NOT ti.isopen_) OVER (PARTITION BY tp.nr_processo, tpi.id_proc_inst) AS tem_fechada
@@ -51,5 +54,5 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
             ) movimentacao
             WHERE movimentacao.tem_aberta AND movimentacao.tem_fechada
             """, nativeQuery = true)
-    List<Object[]> findMovimentacoesProcessosPorFluxo(@Param("fluxo") String fluxo);
+    List<ProcessoMovimentoProjection> findMovimentacoesProcessosPorFluxo(@Param("fluxo") String fluxo);
 }
