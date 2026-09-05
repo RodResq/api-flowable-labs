@@ -3,12 +3,14 @@ package br.com.home.api_flowable_labs.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "jbpm_taskinstance", schema = "public")
+@Immutable
 @Getter
 @NoArgsConstructor
 public class JbpmTaskInstance implements Serializable {
