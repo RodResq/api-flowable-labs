@@ -53,7 +53,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     INNER JOIN jbpm_task jt2  on jt2.tasknode_ = nd.id_
                     INNER JOIN jbpm_taskcontroller jt3 on jt3.id_ = jt2.taskcontroller_
                 WHERE
-                    ti.create_ >= CURRENT_DATE - INTERVAL '1 day'
+                    ti.create_ >= CURRENT_DATE - INTERVAL '7 day'
                     AND tpt.nm_fluxo = :fluxo
             ) movimentacao
             WHERE movimentacao.tem_aberta AND movimentacao.tem_fechada

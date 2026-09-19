@@ -66,7 +66,7 @@ public class ProcessoController {
             @PathVariable Long idProcessoInstance,
             @PathVariable Long idTaskInstance) {
         return ResponseEntity.ok(
-                jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstanceId(idProcessoInstance, idTaskInstance)
+                jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstance(idProcessoInstance, idTaskInstance)
         );
     }
 

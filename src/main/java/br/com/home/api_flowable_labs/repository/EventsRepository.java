@@ -12,7 +12,8 @@ import java.util.List;
 public interface EventsRepository extends JpaRepository<JbpmAction, Long> {
 
     @Query("""
-            SELECT a FROM JbpmAction a
+            SELECT a
+            FROM JbpmAction a
             JOIN FETCH a.event e
             JOIN FETCH e.node n
             WHERE a.processDefinition = :idProcessDefinition

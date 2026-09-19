@@ -57,4 +57,8 @@ public class JbpmVariableInstance implements Serializable {
     @JoinColumn(name = "taskinstance_", referencedColumnName = "id_")
     private JbpmTaskInstance taskInstance;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "token_", referencedColumnName = "id_")
+    private JbpmToken token;
+
 }
