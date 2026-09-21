@@ -3,6 +3,8 @@ package br.com.home.api_flowable_labs.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "jbpm_variableinstance", schema = "public")
 @Getter
+@Immutable
+@NoArgsConstructor
 @AllArgsConstructor
 public class JbpmVariableInstance implements Serializable {
 

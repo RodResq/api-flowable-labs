@@ -46,7 +46,7 @@ public interface FluxoRepository extends JpaRepository<Fluxo, Long> {
                     INNER JOIN core.tb_processo tp ON tp.id_processo = tpi.id_processo
                     INNER JOIN client.tb_processo_tarefa tpt ON tpt.id_process_instance = tpi.id_proc_inst
                 WHERE
-                    ti.create_ >= CURRENT_DATE - INTERVAL '1 day'
+                    ti.create_ >= CURRENT_DATE - INTERVAL '7 day'
                     AND tpt.nm_fluxo = :fluxo
             ) movimentacao
             WHERE movimentacao.tem_aberta AND movimentacao.tem_fechada
