@@ -61,15 +61,6 @@ public class ProcessoController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/{idProcessoInstance}/tarefas/{idTaskInstance}/variaveis")
-    public ResponseEntity<List<JbpmVariableInstance>> listarVariaveis(
-            @PathVariable Long idProcessoInstance,
-            @PathVariable Long idTaskInstance) {
-        return ResponseEntity.ok(
-                jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstance(idProcessoInstance, idTaskInstance)
-        );
-    }
-
     @GetMapping("/buscar/{nrProcesso}")
     public ResponseEntity<Processo> buscarProcesso(@PathVariable String nrProcesso) {
         return processoRepository.findByNrProcesso(nrProcesso)
@@ -81,13 +72,6 @@ public class ProcessoController {
     public ResponseEntity<List<AcaoDoNodeProjection>> listaAcoesDoNode(@PathParam("idProcessDefinition") Long idProcessDefinition,
                                                                        @PathParam("idNode") Long idNode) {
         return ResponseEntity.ok(processoRepository.findAcoesDoNodoNoFluxo(idProcessDefinition, idNode));
-    }
-
-    @GetMapping("/variaveis")
-    public ResponseEntity<List<VariavelDaIntanciaProjection>> buscarVariaveisDaInstancia(
-            @PathParam("idProcessInstance") Long idProcessInstance, @PathParam("idToken") Long idToken) {
-
-        return ResponseEntity.ok(processoRepository.findVariavelsDaIntsancia(idProcessInstance, idToken));
     }
 }
 

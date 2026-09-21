@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "jbpm_variableinstance", schema = "public")
-@Immutable
 @Getter
+@Immutable
 @NoArgsConstructor
+@AllArgsConstructor
 public class JbpmVariableInstance implements Serializable {
 
     @Id
