@@ -2,8 +2,6 @@ package br.com.home.api_flowable_labs.controller;
 
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
-import br.com.home.api_flowable_labs.dto.VariavelDaIntanciaProjection;
-import br.com.home.api_flowable_labs.model.JbpmVariableInstance;
 import br.com.home.api_flowable_labs.model.Processo;
 import br.com.home.api_flowable_labs.repository.JbpmVariableInstanceRepository;
 import br.com.home.api_flowable_labs.repository.ProcessoRepository;

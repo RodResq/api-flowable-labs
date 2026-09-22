@@ -58,5 +58,4 @@ public interface JbpmVariableInstanceRepository extends JpaRepository<JbpmVariab
         """)
     List<VariableInstanceProjection> findByProcessInstance(@Param("idProcessoInstance") Long idProcessoInstance);
 
-    List<JbpmVariableInstance> findByProcessInstanceAndTaskInstance(Long idProcessoInstance, Long IdTaskInstance);
 }

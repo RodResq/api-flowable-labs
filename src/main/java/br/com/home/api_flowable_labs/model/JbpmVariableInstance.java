@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Getter
 @Immutable
 @NoArgsConstructor
-@AllArgsConstructor
 public class JbpmVariableInstance implements Serializable {
 
     @Id
