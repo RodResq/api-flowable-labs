@@ -117,11 +117,11 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
             inner join jbpm_processdefinition jp on jp.id_  = ja.processdefinition_
             INNER JOIN jbpm_processinstance pi ON pi.processdefinition_ = jp.id_
             where ja.actionexpression_  like '%' || :expression || '%'
-            and pi.id_ = :idProcessInstance
-            order by ja.id_ desc
+            and pi.id_ in (:idsProcessInstance)
+            order by pi.start_ desc, ja.id_ desc
             limit 1;
             """, nativeQuery = true)
-    Optional<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstance(@Param("expression") String expression,
-                                                                                            @Param("idProcessInstance") Long idProcessInstance);
+    Optional<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstances(@Param("expression") String expression,
+                                                                                             @Param("idsProcessInstance") List<Long> idsProcessInstance);
 
 }

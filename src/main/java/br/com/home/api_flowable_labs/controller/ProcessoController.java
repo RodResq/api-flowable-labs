@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/processos")
@@ -84,11 +83,12 @@ public class ProcessoController {
     }
 
     @GetMapping("/variable-history-origin")
-    public Optional<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstance(
-            @RequestParam String expression, @RequestParam Long idProcessInstance) {
+    public ResponseEntity<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstances(
+            @RequestParam String expression, @RequestParam List<Long> idsProcessInstance) {
 
-        return ResponseEntity.ok(processoRepository
-                .findByVariableHistoryByExpressionAndProcessInstance(expression, idProcessInstance)).getBody();
+        return processoRepository.findByVariableHistoryByExpressionAndProcessInstances(expression, idsProcessInstance)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
     }
 }
 
