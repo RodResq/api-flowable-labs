@@ -1,6 +1,7 @@
 package br.com.home.api_flowable_labs.repository;
 
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
+import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,5 +74,32 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
             """, nativeQuery = true)
     List<AcaoDoNodeProjection> findAcoesDoNodoNoFluxo(@Param("idProcessDefinition") Long idProcessDefinition,
                                                       @Param("idNode") Long idNode);
+
+    @Query(value = """
+            SELECT
+                  ti.id_ as idTaskInstance,
+                  ti.name_ as nameTask,
+                  ti.create_ as createAt,
+                  ti.end_ as endAt,
+                  ti.isopen_ as openTask,
+                  pd.name_ AS nameFlux,
+                  tpi.id_proc_inst AS idProcessInstance
+              FROM
+                  jbpm_taskinstance ti
+                  INNER JOIN core.tb_processo_instance tpi ON tpi.id_proc_inst = ti.procinst_
+                  INNER JOIN jbpm_processinstance pi ON ti.procinst_ = pi.id_
+                  INNER JOIN jbpm_processdefinition pd ON pi.processdefinition_ = pd.id_
+                  INNER JOIN jbpm_token jt ON jt.id_ = pi.roottoken_
+                  INNER JOIN jbpm_node nd ON nd.id_ = jt.node_
+                  LEFT JOIN acl.tb_usuario_login usu ON usu.ds_login = ti.actorid_
+                  INNER JOIN core.tb_processo tp ON tp.id_processo = tpi.id_processo
+              WHERE
+                  tp.nr_processo = :nrProcesso
+                  and tpi.id_proc_inst = :idProcessInstance
+              ORDER BY
+                  ti.create_;
+            """, nativeQuery = true)
+    List<TaskHistoryProjection> findTaskHistoryByNrProcessoAndProcessInstance(@Param("nrProcesso") String nrProcesso,
+                                                                              @Param("idProcessInstance") Long idProcessInstance);
 
 }
