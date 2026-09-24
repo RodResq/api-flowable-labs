@@ -3,6 +3,7 @@ package br.com.home.api_flowable_labs.controller;
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
+import br.com.home.api_flowable_labs.dto.VariableHistoryProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import br.com.home.api_flowable_labs.repository.JbpmVariableInstanceRepository;
 import br.com.home.api_flowable_labs.repository.ProcessoRepository;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/processos")
@@ -79,6 +81,14 @@ public class ProcessoController {
                                                                        @RequestParam Long idProcessInstance) {
         return ResponseEntity.ok(processoRepository
                 .findTaskHistoryByNrProcessoAndProcessInstance(nrProcesso, idProcessInstance));
+    }
+
+    @GetMapping("/variable-history-origin")
+    public Optional<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstance(
+            @RequestParam String expression, @RequestParam Long idProcessInstance) {
+
+        return ResponseEntity.ok(processoRepository
+                .findByVariableHistoryByExpressionAndProcessInstance(expression, idProcessInstance)).getBody();
     }
 }
 

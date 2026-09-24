@@ -26,7 +26,7 @@ public class VariableController {
     public ResponseEntity<List<JbpmVariableInstance>> listarVariaveisPorProcessInstanceFAnteriores(
             @PathVariable("idProcessInstance") Long idProcessInstance) {
         return ResponseEntity.ok(
-                jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstanceIsNull(idProcessInstance)
+                jbpmVariableInstanceRepository.findByProcessInstanceIdAndTaskInstanceIsNull(idProcessInstance)
         );
     }
 
@@ -35,7 +35,7 @@ public class VariableController {
             @PathVariable Long idProcessInstance,
             @PathVariable Long idTaskInstance) {
         return ResponseEntity.ok(
-                jbpmVariableInstanceRepository.findByProcessInstanceAndTaskInstanceId(idProcessInstance, idTaskInstance)
+                jbpmVariableInstanceRepository.findByProcessInstanceIdAndTaskInstanceId(idProcessInstance, idTaskInstance)
         );
     }
 

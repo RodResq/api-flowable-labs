@@ -50,8 +50,9 @@ public class JbpmVariableInstance implements Serializable {
     @Column(name = "stringvalue_", length = 10000)
     private String stringValue;
 
-    @Column(name = "processinstance_")
-    private Long processInstance;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "processinstance_", referencedColumnName = "id_")
+    private JbpmProcessInstance processInstance;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "taskinstance_", referencedColumnName = "id_")

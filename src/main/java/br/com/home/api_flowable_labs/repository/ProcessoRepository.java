@@ -2,6 +2,7 @@ package br.com.home.api_flowable_labs.repository;
 
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
+import br.com.home.api_flowable_labs.dto.VariableHistoryProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -101,5 +102,26 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
             """, nativeQuery = true)
     List<TaskHistoryProjection> findTaskHistoryByNrProcessoAndProcessInstance(@Param("nrProcesso") String nrProcesso,
                                                                               @Param("idProcessInstance") Long idProcessInstance);
+
+
+    @Query(value = """
+            select
+            	ja.id_ as idAction,
+            	ja.actionexpression_ as actionExpression,
+            	jp.id_ as idProcessDefinition,
+            	jp.name_ as nameProcessDefinition,
+            	pi.id_  as idProcessInstance,
+            	pi.start_ as startAt,
+            	pi.end_ as endAt
+            from jbpm_action ja
+            inner join jbpm_processdefinition jp on jp.id_  = ja.processdefinition_
+            INNER JOIN jbpm_processinstance pi ON pi.processdefinition_ = jp.id_
+            where ja.actionexpression_  like '%' || :expression || '%'
+            and pi.id_ = :idProcessInstance
+            order by ja.id_ desc
+            limit 1;
+            """, nativeQuery = true)
+    Optional<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstance(@Param("expression") String expression,
+                                                                                            @Param("idProcessInstance") Long idProcessInstance);
 
 }
