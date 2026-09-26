@@ -1,6 +1,7 @@
 package br.com.home.api_flowable_labs.controller;
 
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
+import br.com.home.api_flowable_labs.dto.FluxoAndTaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
 import br.com.home.api_flowable_labs.model.Processo;
@@ -80,5 +81,9 @@ public class ProcessoController {
         return ResponseEntity.ok(processoRepository
                 .findTaskHistoryByNrProcessoAndProcessInstance(nrProcesso, idProcessInstance));
     }
-}
 
+    @GetMapping("/fluxo-task-history")
+    public ResponseEntity<List<FluxoAndTaskHistoryProjection>> findFluxoAndTaskHistory(@RequestParam String nrProcesso) {
+        return ResponseEntity.ok(processoRepository.findFluxAndTaskHistoryProjection(nrProcesso));
+    }
+}
