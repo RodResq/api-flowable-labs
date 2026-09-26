@@ -3,6 +3,7 @@ package br.com.home.api_flowable_labs.repository;
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.FluxoAndTaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
+import br.com.home.api_flowable_labs.dto.VariableHistoryProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -102,6 +103,34 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
             """, nativeQuery = true)
     List<TaskHistoryProjection> findTaskHistoryByNrProcessoAndProcessInstance(@Param("nrProcesso") String nrProcesso,
                                                                               @Param("idProcessInstance") Long idProcessInstance);
+
+
+    @Query(value = """
+            select
+            	ja.id_ as idAction,
+            	ja.actionexpression_ as actionExpression,
+            	jp.id_ as idProcessDefinition,
+            	jp.name_ as nameProcessDefinition,
+            	pi.id_  as idProcessInstance,
+            	pi.start_ as startAt,
+            	pi.end_ as endAt
+            from jbpm_action ja
+            inner join jbpm_processdefinition jp on jp.id_  = ja.processdefinition_
+            INNER JOIN jbpm_processinstance pi ON pi.processdefinition_ = jp.id_
+            where ja.actionexpression_ ~ :variablePattern
+            and pi.id_ in (:idsProcessInstance)
+            order by pi.start_ desc, ja.id_ desc
+            limit 1;
+            """, nativeQuery = true)
+    Optional<VariableHistoryProjection> findByVariablePatternAndProcessInstances(@Param("variablePattern") String variablePattern,
+                                                                                 @Param("idsProcessInstance") List<Long> idsProcessInstance);
+
+
+    default Optional<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstances(String expression,
+                                                                                                     List<Long> idsProcessInstance) {
+        String escapedExpression = expression.replaceAll("([^\\p{L}\\p{N}_])", "\\\\$1");
+        return findByVariablePatternAndProcessInstances("\\m" + escapedExpression + "\\M", idsProcessInstance);
+    }
 
 
     @Query(value = """

@@ -4,6 +4,7 @@ import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.FluxoAndTaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.TaskInstanceDTO;
+import br.com.home.api_flowable_labs.dto.VariableHistoryProjection;
 import br.com.home.api_flowable_labs.model.Processo;
 import br.com.home.api_flowable_labs.repository.JbpmVariableInstanceRepository;
 import br.com.home.api_flowable_labs.repository.ProcessoRepository;
@@ -80,6 +81,15 @@ public class ProcessoController {
                                                                        @RequestParam Long idProcessInstance) {
         return ResponseEntity.ok(processoRepository
                 .findTaskHistoryByNrProcessoAndProcessInstance(nrProcesso, idProcessInstance));
+    }
+
+    @GetMapping("/variable-history-origin")
+    public ResponseEntity<VariableHistoryProjection> findByVariableHistoryByExpressionAndProcessInstances(
+            @RequestParam String expression, @RequestParam List<Long> idsProcessInstance) {
+
+        return processoRepository.findByVariableHistoryByExpressionAndProcessInstances(expression, idsProcessInstance)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
     }
 
     @GetMapping("/fluxo-task-history")

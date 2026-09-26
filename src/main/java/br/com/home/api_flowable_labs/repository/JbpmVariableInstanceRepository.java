@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public interface JbpmVariableInstanceRepository extends JpaRepository<JbpmVariableInstance, Long> {
 
-    List<JbpmVariableInstance> findByProcessInstanceAndTaskInstanceId(Long idProcessoInstance, Long idTaskInstance);
+    List<JbpmVariableInstance> findByProcessInstanceIdAndTaskInstanceId(Long idProcessoInstance, Long idTaskInstance);
 
-    List<JbpmVariableInstance> findByProcessInstanceAndTaskInstanceIsNull(Long idProcessoInstance);
+    List<JbpmVariableInstance> findByProcessInstanceIdAndTaskInstanceIsNull(Long idProcessoInstance);
 
     @Query(value = """
             select
@@ -44,7 +44,7 @@ public interface JbpmVariableInstanceRepository extends JpaRepository<JbpmVariab
                                                                 @Param("idToken") Long idToken);
     @Query("""
         SELECT
-            v.processInstance AS idProcessInstance,
+            v.processInstance.id AS idProcessInstance,
             v.taskInstance.id AS idTaskInstance,
             t.id AS idToken,
             v.name AS name,
@@ -54,7 +54,7 @@ public interface JbpmVariableInstanceRepository extends JpaRepository<JbpmVariab
             v.doubleValue AS doubleValue
         FROM JbpmVariableInstance v
         JOIN v.token t
-        WHERE v.processInstance = :idProcessoInstance
+        WHERE v.processInstance.id = :idProcessoInstance
         """)
     List<VariableInstanceProjection> findByProcessInstance(@Param("idProcessoInstance") Long idProcessoInstance);
 
