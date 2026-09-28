@@ -85,7 +85,9 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                   ti.end_ as endAt,
                   ti.isopen_ as openTask,
                   pd.name_ AS nameFlux,
-                  tpi.id_proc_inst AS idProcessInstance
+                  tpi.id_proc_inst AS idProcessInstance,
+                  nd.id_ AS idNode,
+                  nd.name_  AS nameNode
               FROM
                   jbpm_taskinstance ti
                   INNER JOIN core.tb_processo_instance tpi ON tpi.id_proc_inst = ti.procinst_

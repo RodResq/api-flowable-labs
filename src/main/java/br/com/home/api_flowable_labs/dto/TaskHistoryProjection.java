@@ -11,4 +11,6 @@ public interface TaskHistoryProjection {
     Boolean getOpenTask();
     String getNameFlux();
     Long getIdProcessInstance();
+    Long getIdNode();
+    String getNameNode();
 }
