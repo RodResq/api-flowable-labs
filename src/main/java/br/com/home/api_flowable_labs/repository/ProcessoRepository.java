@@ -2,6 +2,7 @@ package br.com.home.api_flowable_labs.repository;
 
 import br.com.home.api_flowable_labs.dto.AcaoDoNodeProjection;
 import br.com.home.api_flowable_labs.dto.FluxoAndTaskHistoryProjection;
+import br.com.home.api_flowable_labs.dto.ProcessInfoProjection;
 import br.com.home.api_flowable_labs.dto.TaskHistoryProjection;
 import br.com.home.api_flowable_labs.dto.VariableHistoryProjection;
 import br.com.home.api_flowable_labs.model.Processo;
@@ -267,5 +268,85 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
         ORDER BY p.id_proc_inst;
     """, nativeQuery = true)
     List<FluxoAndTaskHistoryProjection> findFluxAndTaskHistoryProjection(@Param("nrProcesso") String nrProcesso);
+
+
+    @Query(value = """
+            SELECT
+                tpt.id_processo_trf                 AS idProcessoTrf,
+                tp.nr_processo                      AS nrProcesso,
+                tpt.ds_proc_referencia              AS dsProcReferencia,
+                tpt.in_outra_instancia              AS bloqueado,
+                tpt.in_segredo_justica              AS inSegredoJustica,
+                tpt.dt_autuacao                     AS dtAutuacao,
+                tpt.id_jurisdicao                   AS idJurisdicao,
+                tj.ds_jurisdicao                    AS dsJurisdicao,
+                tpt.id_orgao_julgador               AS idOrgaoJulgador,
+                toj.ds_orgao_julgador               AS dsOrgaoJulgador,
+                tpt.id_orgao_julgador_colegiado     AS idOrgaoJulgadorColegiado,
+                tojc.ds_orgao_julgador_colegiado    AS dsOrgaoJulgadorColegiado,
+                tpt.id_classe_judicial              AS idClasseJudicial,
+                concat(tcj.ds_classe_judicial, ' (', tcj.cd_classe_judicial, ')') AS classeJudicial,
+                tpt.id_competencia                  AS idCompetencia,
+                tc.ds_competencia                   AS dsCompetencia,
+                tpt.id_area_direito                 AS idAreaDireito,
+                tcad.ds_area_direito                AS dsAreaDireito,
+                string_agg(DISTINCT tat.id_assunto_trf::text, ', ') AS idAssuntoTrf,
+                string_agg(DISTINCT concat(tat.ds_assunto_trf, ' (', tat.cd_assunto_trf, ')'), ' | ') AS assuntoTrf,
+                string_agg(DISTINCT tpt2.nm_tarefa, ' | ') AS nmTarefa,
+                tpt.nr_sequencia                    AS nrSequencia,
+                tpt.nr_digito_verificador           AS nrDigitoVerificador,
+                tpt.nr_ano                          AS nrAno,
+                tpt.nr_identificacao_orgao_justica  AS nrIdentificacaoOrgaoJustica,
+                tpt.nr_origem_processo              AS nrOrigemProcesso,
+                tpt.id_localizacao_inicial          AS idLocalizacaoInicial,
+                bool_or(EXISTS (
+                    SELECT 1
+                    FROM jbpm_variableinstance jv
+                    WHERE jv.processinstance_ = tpi.id_proc_inst
+                      AND jv.name_ = 'pje:fluxo:aguardaPlantao'
+                )) AS ehPlantaoJudicial
+            FROM
+                core.tb_processo tp
+                INNER JOIN client.tb_processo_trf tpt ON tp.id_processo = tpt.id_processo_trf
+                INNER JOIN core.tb_processo_instance tpi ON tpi.id_processo = tp.id_processo
+                LEFT OUTER JOIN client.tb_jurisdicao tj ON tj.id_jurisdicao = tpt.id_jurisdicao
+                LEFT OUTER JOIN client.tb_classe_judicial tcj ON tcj.id_classe_judicial = tpt.id_classe_judicial
+                LEFT OUTER JOIN client.tb_orgao_julgador toj ON toj.id_orgao_julgador = tpt.id_orgao_julgador
+                LEFT OUTER JOIN client.tb_orgao_julgador_colgiado tojc ON tpt.id_orgao_julgador_colegiado = tojc.id_orgao_julgador_colegiado
+                LEFT OUTER JOIN client.tb_competencia tc ON tc.id_competencia = tpt.id_competencia
+                LEFT OUTER JOIN client.tb_competencia_area_direito tcad ON tpt.id_area_direito = tcad.id_area_direito
+                LEFT OUTER JOIN client.tb_processo_assunto tpa ON tpa.id_processo_trf = tpt.id_processo_trf
+                LEFT OUTER JOIN client.tb_assunto_trf tat ON tat.id_assunto_trf = tpa.id_assunto_trf
+                LEFT OUTER JOIN client.tb_processo_tarefa tpt2 ON tpt2.id_processo_trf = tpt.id_processo_trf
+            WHERE
+                tp.nr_processo = :nrProcesso
+            GROUP BY
+                tpt.id_processo_trf,
+                tp.nr_processo,
+                tpt.ds_proc_referencia,
+                tpt.in_outra_instancia,
+                tpt.in_segredo_justica,
+                tpt.dt_autuacao,
+                tpt.id_jurisdicao,
+                tj.ds_jurisdicao,
+                tpt.id_orgao_julgador,
+                toj.ds_orgao_julgador,
+                tpt.id_orgao_julgador_colegiado,
+                tojc.ds_orgao_julgador_colegiado,
+                tpt.id_classe_judicial,
+                tcj.ds_classe_judicial,
+                tcj.cd_classe_judicial,
+                tpt.id_competencia,
+                tc.ds_competencia,
+                tpt.id_area_direito,
+                tcad.ds_area_direito,
+                tpt.nr_sequencia,
+                tpt.nr_digito_verificador,
+                tpt.nr_ano,
+                tpt.nr_identificacao_orgao_justica,
+                tpt.nr_origem_processo,
+                tpt.id_localizacao_inicial
+            """, nativeQuery = true)
+    Optional<ProcessInfoProjection> getProcessInfo(@Param("nrProcesso") String nrProcesso);
 
 }
