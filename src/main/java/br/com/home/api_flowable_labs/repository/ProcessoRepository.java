@@ -277,6 +277,16 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 tpt.ds_proc_referencia              AS dsProcReferencia,
                 tpt.in_outra_instancia              AS bloqueado,
                 tpt.in_segredo_justica              AS inSegredoJustica,
+                tpt.in_apreciado_segredo 			AS inApreciadoSegredoJustica,
+                tpt.in_tutela_liminar  				AS inTutelaLiminar,
+                tpt.in_apreciado_tutela_liminar     AS inApreciadoTutelaLiminar,
+                tpt.in_justica_gratuita             AS inJusticaGratuita,
+                tpt.in_apreciado_justica_gratuita   AS inApreciadoJusticaGratuita,
+                EXISTS (
+                    SELECT 1
+                        FROM client.tb_processo_trf_conexao tptc
+                        WHERE tptc.id_processo_trf = tpt.id_processo_trf
+                ) AS possuiConexao,
                 tpt.dt_autuacao                     AS dtAutuacao,
                 tpt.id_jurisdicao                   AS idJurisdicao,
                 tj.ds_jurisdicao                    AS dsJurisdicao,
@@ -285,6 +295,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 tpt.id_orgao_julgador_colegiado     AS idOrgaoJulgadorColegiado,
                 tojc.ds_orgao_julgador_colegiado    AS dsOrgaoJulgadorColegiado,
                 tpt.id_classe_judicial              AS idClasseJudicial,
+                tcj.cd_classe_judicial				AS cdClasseJudicial,
                 concat(tcj.ds_classe_judicial, ' (', tcj.cd_classe_judicial, ')') AS classeJudicial,
                 tpt.id_competencia                  AS idCompetencia,
                 tc.ds_competencia                   AS dsCompetencia,

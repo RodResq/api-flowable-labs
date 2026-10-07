@@ -7,7 +7,18 @@ public interface ProcessInfoProjection {
     String getNrProcesso();
     String getDsProcReferencia();
     Boolean getBloqueado();
+
     Boolean getInSegredoJustica();
+    String getInApreciadoSegredoJustica();
+
+    Boolean getInTutelaLiminar();
+    Boolean getInApreciadoTutelaLiminar();
+
+    Boolean getInJusticaGratuita();
+    Boolean getInApreciadoJusticaGratuita();
+
+    Boolean getPossuiConexao();
+
     LocalDateTime getDtAutuacao();
 
     Long getIdJurisdicao();
@@ -20,6 +31,7 @@ public interface ProcessInfoProjection {
     String getDsOrgaoJulgadorColegiado();
 
     Long getIdClasseJudicial();
+    Integer getCdClasseJudicial();
     String getClasseJudicial();
 
     Long getIdCompetencia();
