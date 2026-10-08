@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 
 public interface ProcessInfoProjection {
     Long getIdProcessoTrf();
+
     String getNrProcesso();
+    Boolean getEhMigracao();
+
     String getDsProcReferencia();
     Boolean getBloqueado();
 
@@ -33,6 +36,10 @@ public interface ProcessInfoProjection {
     Long getIdClasseJudicial();
     Integer getCdClasseJudicial();
     String getClasseJudicial();
+
+    Long getIdAgrupamento();
+    String getCdAgrupamento();
+    String getDsAgrupamento();
 
     Long getIdCompetencia();
     String getDsCompetencia();

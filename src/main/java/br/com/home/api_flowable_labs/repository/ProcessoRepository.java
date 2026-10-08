@@ -274,6 +274,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
             SELECT
                 tpt.id_processo_trf                 AS idProcessoTrf,
                 tp.nr_processo                      AS nrProcesso,
+                LEFT(tp.nr_processo, 2) NOT IN ('08', '09') AS ehMigracao,
                 tpt.ds_proc_referencia              AS dsProcReferencia,
                 tpt.in_outra_instancia              AS bloqueado,
                 tpt.in_segredo_justica              AS inSegredoJustica,
@@ -297,6 +298,9 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 tpt.id_classe_judicial              AS idClasseJudicial,
                 tcj.cd_classe_judicial				AS cdClasseJudicial,
                 concat(tcj.ds_classe_judicial, ' (', tcj.cd_classe_judicial, ')') AS classeJudicial,
+                tac.id_agrupamento					as idAgrupamento,
+                tac.cd_agrupamento					as cdAgrupamento,
+                tac.ds_agrupamento					as dsAgrupamento,
                 tpt.id_competencia                  AS idCompetencia,
                 tc.ds_competencia                   AS dsCompetencia,
                 tpt.id_area_direito                 AS idAreaDireito,
@@ -322,6 +326,8 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 INNER JOIN core.tb_processo_instance tpi ON tpi.id_processo = tp.id_processo
                 LEFT OUTER JOIN client.tb_jurisdicao tj ON tj.id_jurisdicao = tpt.id_jurisdicao
                 LEFT OUTER JOIN client.tb_classe_judicial tcj ON tcj.id_classe_judicial = tpt.id_classe_judicial
+                LEFT OUTER JOIN client.tb_agrupamento_classes tacs on tacs.id_classe_judicial = tcj.id_classe_judicial
+                LEFT OUTER JOIN client.tb_agrupamento_classe tac on tac.id_agrupamento = tacs.id_agrupamento
                 LEFT OUTER JOIN client.tb_orgao_julgador toj ON toj.id_orgao_julgador = tpt.id_orgao_julgador
                 LEFT OUTER JOIN client.tb_orgao_julgador_colgiado tojc ON tpt.id_orgao_julgador_colegiado = tojc.id_orgao_julgador_colegiado
                 LEFT OUTER JOIN client.tb_competencia tc ON tc.id_competencia = tpt.id_competencia
@@ -347,6 +353,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
                 tpt.id_classe_judicial,
                 tcj.ds_classe_judicial,
                 tcj.cd_classe_judicial,
+                tac.id_agrupamento,
                 tpt.id_competencia,
                 tc.ds_competencia,
                 tpt.id_area_direito,
